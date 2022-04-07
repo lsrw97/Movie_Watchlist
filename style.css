@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+header {
+    height: 25vh;
+    background-image: url("images/movie.jpg");
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    text-align: center;
+
+} 
+
+.title {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    color: white;
+    padding: 1.5em;
+    box-sizing: border-box;
+}
+
+h1 {
+    padding-left: 2em;
+    font-size: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    font-size: 1rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 300;
+    transform: translateY(50%);
+}
+
+.search-input {
+    background: grey;
+    width: 60%;
+    display: flex;
+    border-radius: 5px;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    color: black;
+    height: 2em;
+}
+
+#searchFilm {
+    box-sizing: border;
+    background-image: url("images/search.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-left: 35px;
+    width: 75%;
+    margin: 0;
+    border: 0;
+    border-radius: 5px 0 0 5px;
+    border-left: 1px solid ;
+    border-top: 1px solid ;
+    border-bottom: 1px solid ;
+    border-color:rgba(0, 0, 0, 0.4)
+}
+
+#submit {
+    box-sizing: border;
+    width: 25%;
+    margin: 0;
+    border: 0;
+    border-radius: 0 5px 5px 0;
+    border-right: 1px solid ;
+    border-top: 1px solid ;
+    border-bottom: 1px solid ;
+    border-left: 1px solid ;
+    border-color:rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+*:focus {
+    outline: none;
+}
+
+#submit:hover {
+    background-color:rgba(99, 94, 94, 0.6);
+}
+
+#film-list {
+    height: 75vh;
+    position: relative;
+    color: rgba(173, 168, 168, 0.308);
+    font-size: 2rem;
+}
+
+.background-default {
+    width: 20%;
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.subtitle-default {
+    margin: 0;
+}
+
+.material-icons.md-48 { font-size: 100px; }
+
+.material-icons.md-light { color: rgba(173, 168, 168, 0.308); }
+
