@@ -158,7 +158,7 @@ h2 {
     margin: 0 .5em 0 1em;
 }
 
-.add {
+.add-icon {
     width: 1em;
     margin: 0 .5em 0 1em;
     position: relative;
@@ -197,7 +197,7 @@ main:first-child {
     border: none;
 }
 
-#movie-add-watchlist {
+.add-watchlist {
     color: black;
     font-weight: 500;
     cursor: pointer;
