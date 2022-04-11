@@ -1,41 +1,56 @@
 let movieList = document.getElementById("movie-list")
-const movieTitle = document.getElementById("searchFilm")
-const searchBtn = document.getElementById("submit")
+let movieTitle = document.getElementById("searchFilm")
+let searchBtn = document.getElementById("submit")
 const watchList = document.getElementsByClassName('add-watchlist')
+let html = ''
 let watchlistLink = ''
 let searchFilmLink = ''
 let myWatchlist = []
-let index = 0
 
-
-
-searchBtn.addEventListener('click', () => {
+function searchMovies(){
+    
     fetch(`https://www.omdbapi.com/?apikey=6ead165b&s=${movieTitle.value}`)
     .then(res => res.json())
     .then(data => {
         getMoviesListHtml(data)
-        setTimeout(() => {
             for (var i = 0; i < watchList.length; i++) {
                 let id = watchList[i].id
                 watchList[i].addEventListener("click", function () {
-                    console.log(id)
                     myWatchlist.push(id)
                     localStorage.setItem('watchlist', JSON.stringify(myWatchlist))
                 });
             }
-        }, 1000)
     })
-    
-})
+}
+
+searchBtn.addEventListener('click', searchMovies)
 
 function getMoviesListHtml(data){
-    movieList.innerHTML = ''
+    html = ''
     const array = data.Search
-    array.forEach(movie => {
+    
+    array.forEach((movie, idx, arr) => {
         fetch(`http://www.omdbapi.com/?apikey=6ead165b&t=${movie.Title}&plot=short`)
             .then(res => res.json())
             .then(movieInfos => {
-                movieList.innerHTML += `
+                if(idx === arr.length - 1){
+                    console.log('last child')
+                    html += `
+                    <div class="container-last">
+                        <div class="movie-container">
+                            <img src="${movieInfos.Poster}" id="movie-poster">
+                            <div class="movie-info">
+                                <div class="info-title"><h2 id="movie-title">${movieInfos.Title}</h2><p id="movie-rating"><img src="images/star.png" class="star">${movieInfos.imdbRating}</p></div>
+                                <div class="info-specs"><span id="movie-duration">${movieInfos.Runtime}</span><span id="movie-genre">${movieInfos.Genre}</span><a id="${movie.Title}" class="add-watchlist"><img src="images/add.png" class="add-icon">Watchlist</a></div>
+                                <div class="info-description"><span id="movie-description">${movieInfos.Plot}</span></div>
+                            </div>
+                        </div>
+                    </div>
+                `
+                }
+                else
+                {
+                html += `
                 <div class="container">
                     <div class="movie-container">
                         <img src="${movieInfos.Poster}" id="movie-poster">
@@ -46,14 +61,19 @@ function getMoviesListHtml(data){
                         </div>
                     </div>
                 </div>
-                `
+                `}
             })
+
     })
+    
+    setTimeout(() => {
+        movieList.innerHTML = html
+        console.log(movieList)
+    }, 1000)
 }
 
 function getWatchlistHtml() {
     let arr = JSON.parse(localStorage.getItem('watchlist'))
-    console.log(arr[0])
     document.body.innerHTML = 
     `
     <header>
@@ -67,22 +87,39 @@ function getWatchlistHtml() {
     <script src="script.js"></script>
     `
     movieList = document.getElementById("movie-list")
-    arr.forEach(movie => {
-        fetch(`http://www.omdbapi.com/?apikey=6ead165b&t=${movie}&plot=short`)
+    arr.forEach((movie, idx, array) => {
+            fetch(`http://www.omdbapi.com/?apikey=6ead165b&t=${movie}&plot=short`)
             .then(res => res.json())
             .then(movieInfos => {
-                movieList.innerHTML += `
-                <div class="container">
-                    <div class="movie-container">
-                        <img src="${movieInfos.Poster}" id="movie-poster">
-                        <div class="movie-info">
-                            <div class="info-title"><h2 id="movie-title">${movieInfos.Title}</h2><p id="movie-rating"><img src="images/star.png" class="star">${movieInfos.imdbRating}</p></div>
-                            <div class="info-specs"><span id="movie-duration">${movieInfos.Runtime}</span><span id="movie-genre">${movieInfos.Genre}</span><a id="${movie.Title}" class="add-watchlist"><img src="images/add.png" class="add-icon">Watchlist</a></div>
-                            <div class="info-description"><span id="movie-description">${movieInfos.Plot}</span></div>
+                if(idx === arr.length - 1)
+                {
+                    movieList.innerHTML += `
+                    <div class="container last">
+                        <div class="movie-container">
+                            <img src="${movieInfos.Poster}" id="movie-poster">
+                            <div class="movie-info">
+                                <div class="info-title"><h2 id="movie-title">${movieInfos.Title}</h2><p id="movie-rating"><img src="images/star.png" class="star">${movieInfos.imdbRating}</p></div>
+                                <div class="info-specs"><span id="movie-duration">${movieInfos.Runtime}</span><span id="movie-genre">${movieInfos.Genre}</span><a id="${movie.Title}" class="add-watchlist"><img src="images/add.png" class="add-icon">Watchlist</a></div>
+                                <div class="info-description"><span id="movie-description">${movieInfos.Plot}</span></div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 `
+                }
+                else
+                {
+                    movieList.innerHTML += `
+                    <div class="container">
+                        <div class="movie-container">
+                            <img src="${movieInfos.Poster}" id="movie-poster">
+                            <div class="movie-info">
+                                <div class="info-title"><h2 id="movie-title">${movieInfos.Title}</h2><p id="movie-rating"><img src="images/star.png" class="star">${movieInfos.imdbRating}</p></div>
+                                <div class="info-specs"><span id="movie-duration">${movieInfos.Runtime}</span><span id="movie-genre">${movieInfos.Genre}</span><a id="${movie.Title}" class="add-watchlist"><img src="images/add.png" class="add-icon">Watchlist</a></div>
+                                <div class="info-description"><span id="movie-description">${movieInfos.Plot}</span></div>
+                            </div>
+                        </div>
+                    </div>`
+                }
             })
     })
         
@@ -109,10 +146,16 @@ function getIndexHtml() {
             <p class="subtitle-default">Start exploring</p>
         </div>
     </main>
-    <script src="script.js"></script>
     `
-    watchlistLink = document.getElementById('myWatchlist')
-    watchlistLink.addEventListener('click', getWatchlistHtml)
+        
+        movieList = document.getElementById("movie-list")
+        console.log(movieList.innerHTML)
+        movieTitle = document.getElementById("searchFilm")
+        searchBtn = document.getElementById("submit")
+        searchBtn.addEventListener('click', searchMovies)
+        watchlistLink = document.getElementById('myWatchlist')
+        watchlistLink.addEventListener('click', getWatchlistHtml)
+
 }
 
 watchlistLink = document.getElementById('myWatchlist')
