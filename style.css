@@ -217,6 +217,10 @@ h2 {
     cursor: pointer;
 }
 
+.add-watchlist:hover,
+.remove-watchlist:hover {
+    color:rgba(99, 94, 94, 0.6);
+}
 
 .material-icons.md-48 { font-size: 100px; }
 
