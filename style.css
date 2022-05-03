@@ -210,7 +210,8 @@ h2 {
     margin-right: .6em;
 }
 
-.add-watchlist {
+.add-watchlist,
+.remove-watchlist {
     color: black;
     font-weight: 500;
     cursor: pointer;

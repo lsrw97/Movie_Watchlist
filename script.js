@@ -155,10 +155,11 @@ function getWatchlistHtml() {
                 localStorage.clear()
                 myWatchlist = arr
                 localStorage.setItem('watchlist', JSON.stringify(arr))
+                getWatchlistHtml()
             });
         }
     }, 1000)
-    
+
     searchFilmLink = document.getElementById('searchFilmLink')
     searchFilmLink.addEventListener('click', getIndexHtml)
 }
