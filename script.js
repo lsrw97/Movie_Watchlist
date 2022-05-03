@@ -1,25 +1,30 @@
 let movieList = document.getElementById("movie-list")
 let movieTitle = document.getElementById("searchFilm")
 let searchBtn = document.getElementById("submit")
-const watchList = document.getElementsByClassName('add-watchlist')
+
 let html = ''
 let watchlistLink = ''
 let searchFilmLink = ''
 let myWatchlist = []
 
+
 function searchMovies(){
-    
     fetch(`https://www.omdbapi.com/?apikey=6ead165b&s=${movieTitle.value}`)
     .then(res => res.json())
     .then(data => {
         getMoviesListHtml(data)
-            for (var i = 0; i < watchList.length; i++) {
-                let id = watchList[i].id
-                watchList[i].addEventListener("click", function () {
-                    myWatchlist.push(id)
-                    localStorage.setItem('watchlist', JSON.stringify(myWatchlist))
-                });
-            }
+        //console.log(watchList[0])
+        //console.log(watchList.length)
+        //    for (var i = 0; i < watchList.length; i++) {
+        //        let id = watchList[i].id
+        //        console.log(id)
+        //        watchList[i].addEventListener("click", function () {
+        //            console.log(watchList[i])
+        //            myWatchlist.push(id)
+        //            localStorage.setItem('watchlist', JSON.stringify(myWatchlist))
+        //        });
+        //    }
+        
     })
 }
 
@@ -69,11 +74,22 @@ function getMoviesListHtml(data){
     setTimeout(() => {
         movieList.innerHTML = html
         console.log(movieList)
+        const watchList = document.getElementsByClassName('add-watchlist')
+        for (var i = 0; i < watchList.length; i++) {
+            let id = watchList[i].id
+            console.log(id)
+            watchList[i].addEventListener("click", function () {
+                console.log(watchList[i])
+                myWatchlist.push(id)
+                localStorage.setItem('watchlist', JSON.stringify(myWatchlist))
+            });
+        }
     }, 1000)
 }
 
 function getWatchlistHtml() {
     let arr = JSON.parse(localStorage.getItem('watchlist'))
+    console.log(arr)
     document.body.innerHTML = 
     `
     <header>
@@ -99,7 +115,7 @@ function getWatchlistHtml() {
                             <img src="${movieInfos.Poster}" id="movie-poster">
                             <div class="movie-info">
                                 <div class="info-title"><h2 id="movie-title">${movieInfos.Title}</h2><p id="movie-rating"><img src="images/star.png" class="star">${movieInfos.imdbRating}</p></div>
-                                <div class="info-specs"><span id="movie-duration">${movieInfos.Runtime}</span><span id="movie-genre">${movieInfos.Genre}</span><a id="${movie.Title}" class="add-watchlist"><img src="images/add.png" class="add-icon">Watchlist</a></div>
+                                <div class="info-specs"><span id="movie-duration">${movieInfos.Runtime}</span><span id="movie-genre">${movieInfos.Genre}</span><a id="${movie.Title}" class="add-watchlist"><img src="images/add.png" class="add-icon">Remove from Watchlist</a></div>
                                 <div class="info-description"><span id="movie-description">${movieInfos.Plot}</span></div>
                             </div>
                         </div>
@@ -114,7 +130,7 @@ function getWatchlistHtml() {
                             <img src="${movieInfos.Poster}" id="movie-poster">
                             <div class="movie-info">
                                 <div class="info-title"><h2 id="movie-title">${movieInfos.Title}</h2><p id="movie-rating"><img src="images/star.png" class="star">${movieInfos.imdbRating}</p></div>
-                                <div class="info-specs"><span id="movie-duration">${movieInfos.Runtime}</span><span id="movie-genre">${movieInfos.Genre}</span><a id="${movie.Title}" class="add-watchlist"><img src="images/add.png" class="add-icon">Watchlist</a></div>
+                                <div class="info-specs"><span id="movie-duration">${movieInfos.Runtime}</span><span id="movie-genre">${movieInfos.Genre}</span><a id="${movie.Title}" class="add-watchlist"><img src="images/add.png" class="add-icon">Remove from Watchlist</a></div>
                                 <div class="info-description"><span id="movie-description">${movieInfos.Plot}</span></div>
                             </div>
                         </div>
